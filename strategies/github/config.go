@@ -39,13 +39,20 @@ func (c *Config) ExchangeAuthInfo(ctx context.Context, code string, opts ...oaut
 	if err != nil {
 		return nil, err
 	}
-	return &omniauth.Auth{
+	auth := &omniauth.Auth{
 		ID:      user["id"].(json.Number).String(),
-		Name:    user["name"].(string),
-		Email:   user["email"].(string),
-		Picture: user["avatar_url"].(string),
 		RawInfo: user,
-	}, nil
+	}
+	if name, ok := user["name"].(string); ok {
+		auth.Name = name
+	}
+	if email, ok := user["email"].(string); ok {
+		auth.Email = email
+	}
+	if pic, ok := user["avatar_url"].(string); ok {
+		auth.Picture = pic
+	}
+	return auth, nil
 }
 
 func (c *Config) user(token *oauth2.Token) (map[string]any, error) {

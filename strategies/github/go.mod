@@ -5,7 +5,7 @@ go 1.20
 replace github.com/dundunlabs/omniauth => ../..
 
 require (
-	github.com/dundunlabs/omniauth v1.0.0
+	github.com/dundunlabs/omniauth v1.0.1
 	golang.org/x/oauth2 v0.8.0
 )
 
