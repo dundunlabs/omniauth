@@ -16,6 +16,12 @@ type IConfig interface {
 	ExchangeAuthInfoByToken(token *oauth2.Token) (*Auth, error)
 }
 
+func NewConfig(config *oauth2.Config) *Config {
+	return &Config{
+		Config: config,
+	}
+}
+
 type Config struct {
 	*oauth2.Config
 	self IConfig

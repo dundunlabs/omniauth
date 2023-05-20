@@ -19,7 +19,7 @@ func compare(t *testing.T, got any, want any) {
 }
 
 func TestExchangeAuthInfoByToken(t *testing.T) {
-	config := new(Config)
+	config := NewConfig(&oauth2.Config{})
 
 	t.Run("valid token", func(t *testing.T) {
 		token := new(oauth2.Token).WithExtra(map[string]any{

@@ -10,17 +10,16 @@ on:
     branches: [ "main" ]
 
 jobs:
+  strategies:
+    strategy:
+      matrix:
+        strategy: [ "github" ]
+    uses: ./.github/workflows/test-workflow.yml
+    with:
+      workdir: strategies/${{ matrix.strategy }}
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Go
-      uses: actions/setup-go@v3
-
-    - name: Test
-      run: go test -race -coverprofile=coverage.out -covermode=atomic
-
-    - name: Codecov
-      uses: codecov/codecov-action@v3
+  omniauth:
+    needs: strategies
+    uses: ./.github/workflows/test-workflow.yml
+    with:
+      workdir: .
