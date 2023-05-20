@@ -1,0 +1,23 @@
+name: Test workflow
+
+on:
+  workflow_call:
+    inputs:
+      workdir:
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.workdir }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
+      - name: Test
+        run: go test -race -coverprofile=coverage.out -covermode=atomic
+      - name: Codecov
+        uses: codecov/codecov-action@v3
